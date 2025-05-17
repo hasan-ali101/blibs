@@ -1,8 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import App from "./App.tsx";
+import Container from "./container.tsx";
 import styles from "./index.css?inline";
+import App from "./App.tsx";
 
 const rootElement = document.createElement("div");
 rootElement.id = "react-chrome-app";
@@ -34,6 +35,8 @@ document.body.appendChild(rootElement);
 const root = createRoot(innerRoot);
 root.render(
   <StrictMode>
-    <App />
+    <Container>
+      <App />
+    </Container>
   </StrictMode>
 );
