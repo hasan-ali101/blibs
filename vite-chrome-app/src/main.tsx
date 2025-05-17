@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 
 import Container from "./container.tsx";
 import styles from "./index.css?inline";
-import App from "./App.tsx";
 
 const rootElement = document.createElement("div");
 rootElement.id = "react-chrome-app";
@@ -23,6 +22,8 @@ globalStyles.innerHTML = `
 
 const shadowRoot = rootElement.attachShadow({ mode: "open" });
 const innerRoot = document.createElement("div");
+innerRoot.id = "inner-root";
+
 shadowRoot.appendChild(innerRoot);
 
 const styleTag = document.createElement("style");
@@ -35,8 +36,6 @@ document.body.appendChild(rootElement);
 const root = createRoot(innerRoot);
 root.render(
   <StrictMode>
-    <Container>
-      <App />
-    </Container>
+    <Container />
   </StrictMode>
 );
