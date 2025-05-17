@@ -2,9 +2,10 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import styleInject from "vite-plugin-style-inject";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), styleInject()],
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
   },
@@ -12,14 +13,13 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/main.tsx"),
       name: "ContentScript",
-      formats: ["iife"], // single self-executing file
+      formats: ["iife"],
       fileName: () => "content.js",
     },
     outDir: path.resolve(__dirname, "..", "extension"),
-    emptyOutDir: false, // prevent deleting existing files
+    emptyOutDir: false,
     cssCodeSplit: false,
     rollupOptions: {
-      // prevent externalizing any deps (bundle everything)
       external: [],
       output: {
         globals: {},

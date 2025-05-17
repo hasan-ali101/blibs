@@ -1,10 +1,10 @@
 import { Rnd } from "react-rnd";
-import MyApp from "./components/MyApp";
+import MyApp from "./MyApp";
 
 function App() {
   return (
     <Rnd
-      className="w-fit overflow-clip"
+      className="w-fit overflow-clip h-fit"
       style={{
         display: "flex",
         alignItems: "center",
@@ -14,8 +14,8 @@ function App() {
         pointerEvents: "auto",
       }}
       default={{
-        x: 300,
-        y: 300,
+        x: 900,
+        y: 400,
         width: 350,
         height: 300,
       }}
