@@ -1,5 +1,7 @@
-import React from "react";
+import { useState } from "react";
+
 import Scene from "./components/Scene";
+import Collection from "./collection";
 
 type App = {
   isMinimised?: boolean;
@@ -7,8 +9,15 @@ type App = {
 };
 
 const App = ({ isMinimised = false }: App) => {
-  const selectedRobot = "samurai";
+  const [selectedRobot, setSelecteedRobtot] = useState("");
 
-  return <Scene isMinimised={isMinimised} selectedRobot={selectedRobot} />;
+  return (
+    <>
+      {selectedRobot && (
+        <Scene isMinimised={isMinimised} selectedRobot={selectedRobot} />
+      )}
+      <Collection />
+    </>
+  );
 };
 export default App;

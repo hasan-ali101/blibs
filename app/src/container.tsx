@@ -52,9 +52,9 @@ function Container() {
             )}
           </div>
           <div className="flex">
-            <div className="drag-handle w-8 h-64 bg-blue-50/100 cursor-pointer opacity-0 group-hover:opacity-100 group-active:opacity-100" />
+            <div className="drag-handle w-8 flex-1 bg-blue-50/100 cursor-pointer opacity-0 group-hover:opacity-100 group-active:opacity-100" />
             <App isMinimised={isMinimised} />
-            <div className="drag-handle flex justify-end w-8 h-64 bg-blue-50/100 cursor-pointer opacity-0 group-hover:opacity-100 group-active:opacity-100" />{" "}
+            <div className="drag-handle flex justify-end w-8 flex-1 bg-blue-50/100 cursor-pointer opacity-0 group-hover:opacity-100 group-active:opacity-100" />{" "}
           </div>
           <div className="drag-handle w-full h-8 bg-blue-50/100 rounded-b-xl cursor-pointer opacity-0 group-hover:opacity-100 group-active:opacity-100" />
         </div>
