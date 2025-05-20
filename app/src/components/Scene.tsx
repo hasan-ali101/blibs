@@ -1,11 +1,16 @@
 import { Canvas } from "@react-three/fiber";
 
-import { Model } from "./Bot";
+import { Model } from "../Model";
 import { OrbitControls } from "@react-three/drei";
 
-const App = ({ isMinimised = false }: { isMinimised?: boolean }) => {
+type SceneType = {
+  isMinimised?: boolean;
+  selectedRobot: string;
+};
+
+const Scene = ({ isMinimised, selectedRobot }: SceneType) => {
   return (
-    <div className="bg-black/0 w-64 h-64">
+    <div className="w-64 h-64">
       <Canvas className="w-full h-full">
         <ambientLight intensity={Math.PI / 2} />
         <spotLight
@@ -18,10 +23,11 @@ const App = ({ isMinimised = false }: { isMinimised?: boolean }) => {
         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
         <mesh position={[0, -0.2, 0]} scale={2.8}>
           {!isMinimised && <OrbitControls enableZoom={false} />}
-          <Model rotation-y={-0.3} />
+          <Model rotation-y={-0.3} name={selectedRobot} />
         </mesh>
       </Canvas>
     </div>
   );
 };
-export default App;
+
+export default Scene;

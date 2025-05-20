@@ -10,7 +10,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["bot.glb"],
+      "resources": ["samurai.glb", "samurai-dark.glb"],
       "matches": ["<all_urls>"]
     }
   ]

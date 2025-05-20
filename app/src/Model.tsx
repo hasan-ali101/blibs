@@ -8,7 +8,7 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   useEffect(() => {
     try {
       // @ts-ignore
-      const resolved = chrome.runtime.getURL("bot.glb");
+      const resolved = chrome.runtime.getURL(`${props.name}.glb`);
       setUrl(resolved);
     } catch (err) {
       console.error("Error resolving GLB path", err);
@@ -20,7 +20,7 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes } = useGLTF(url) as any;
 
   // for development
-  // const { nodes } = useGLTF("/bot.glb") as any;
+  // const { nodes } = useGLTF(`/${props.name}.glb`) as any;
 
   return (
     <group {...props} dispose={null}>
@@ -29,4 +29,4 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/bot.glb");
+useGLTF.preload(`/samurai.glb`);
