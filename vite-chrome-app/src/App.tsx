@@ -5,8 +5,8 @@ import { OrbitControls } from "@react-three/drei";
 
 const App = ({ isMinimised = false }: { isMinimised?: boolean }) => {
   return (
-    <div className="w-64 h-64 bg-black/0">
-      <Canvas>
+    <div className="bg-black/0 w-64 h-64">
+      <Canvas className="w-full h-full">
         <ambientLight intensity={Math.PI / 2} />
         <spotLight
           position={[10, 10, 10]}
@@ -16,9 +16,9 @@ const App = ({ isMinimised = false }: { isMinimised?: boolean }) => {
           intensity={Math.PI}
         />
         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
-        <mesh position={[0, -0.4, 0]} scale={2.5}>
+        <mesh position={[0, -0.2, 0]} scale={2.8}>
           {!isMinimised && <OrbitControls enableZoom={false} />}
-          <Model />
+          <Model rotation-y={-0.3} />
         </mesh>
       </Canvas>
     </div>

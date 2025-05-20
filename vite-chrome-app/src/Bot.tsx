@@ -1,13 +1,13 @@
-// @ts-nocheck
-
 import { JSX, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export function Model(props: JSX.IntrinsicElements["group"]) {
+  // for production
   const [url, setUrl] = useState<string | null>(null);
 
   useEffect(() => {
     try {
+      // @ts-ignore
       const resolved = chrome.runtime.getURL("bot.glb");
       setUrl(resolved);
     } catch (err) {
@@ -17,7 +17,11 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
 
   if (!url) return null;
 
-  const { nodes, materials } = useGLTF(url);
+  const { nodes } = useGLTF(url) as any;
+
+  // for development
+  // const { nodes } = useGLTF("/bot.glb") as any;
+
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.mesh_0.geometry} material={nodes.mesh_0.material} />
