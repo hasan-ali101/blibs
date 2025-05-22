@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import Container from "./container.tsx";
+import App from "./app";
 import styles from "./index.css?inline";
 
 const rootElement = document.createElement("div");
@@ -36,6 +36,6 @@ document.body.appendChild(rootElement);
 const root = createRoot(innerRoot);
 root.render(
   <StrictMode>
-    <Container />
+    <App />
   </StrictMode>
 );

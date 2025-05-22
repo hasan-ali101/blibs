@@ -1,14 +1,16 @@
 import { JSX, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 
-export function Model(props: JSX.IntrinsicElements["group"]) {
+type Model = JSX.IntrinsicElements["group"] & { modelPath: string };
+
+export function Model(props: Model) {
   // for production
   // const [url, setUrl] = useState<string | null>(null);
 
   // useEffect(() => {
   //   try {
   //     // @ts-ignore
-  //     const resolved = chrome.runtime.getURL(`${props.name}.glb`);
+  //     const resolved = chrome.runtime.getURL({modelPath});
   //     setUrl(resolved);
   //   } catch (err) {
   //     console.error("Error resolving GLB path", err);
@@ -20,7 +22,7 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   // const { nodes } = useGLTF(url) as any;
 
   // for development
-  const { nodes } = useGLTF(`/${props.name}.glb`) as any;
+  const { nodes } = useGLTF(`/${props.modelPath}`) as any;
 
   return (
     <group {...props} dispose={null}>
