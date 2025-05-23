@@ -5,24 +5,24 @@ type Model = JSX.IntrinsicElements["group"] & { modelPath: string };
 
 export function Model(props: Model) {
   // for production
-  // const [url, setUrl] = useState<string | null>(null);
+  const [url, setUrl] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   try {
-  //     // @ts-ignore
-  //     const resolved = chrome.runtime.getURL({modelPath});
-  //     setUrl(resolved);
-  //   } catch (err) {
-  //     console.error("Error resolving GLB path", err);
-  //   }
-  // }, []);
+  useEffect(() => {
+    try {
+      // @ts-ignore
+      const resolved = chrome.runtime.getURL(props.modelPath);
+      setUrl(resolved);
+    } catch (err) {
+      console.error("Error resolving GLB path", err);
+    }
+  }, []);
 
-  // if (!url) return null;
+  if (!url) return null;
 
-  // const { nodes } = useGLTF(url) as any;
+  const { nodes } = useGLTF(url) as any;
 
   // for development
-  const { nodes } = useGLTF(`/${props.modelPath}`) as any;
+  // const { nodes } = useGLTF(`/${props.modelPath}`) as any;
 
   return (
     <group {...props} dispose={null}>
