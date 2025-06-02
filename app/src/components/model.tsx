@@ -1,4 +1,7 @@
 import { JSX, useEffect, useState } from "react";
+
+// Declare chrome as a global variable
+declare const chrome: any;
 import { useGLTF } from "@react-three/drei";
 
 type Model = JSX.IntrinsicElements["group"] & { modelPath: string };
@@ -8,21 +11,21 @@ export function Model(props: Model) {
   const [url, setUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      // @ts-ignore
-      const resolved = chrome.runtime.getURL(props.modelPath);
-      setUrl(resolved);
-    } catch (err) {
-      console.error("Error resolving GLB path", err);
+    if (chrome.runtime) {
+      try {
+        const resolved = chrome.runtime.getURL(props.modelPath);
+        setUrl(resolved);
+      } catch (err) {
+        console.error("Error resolving GLB path", err);
+      }
+    } else {
+      setUrl(`/${props.modelPath}`);
     }
   }, []);
 
   if (!url) return null;
 
   const { nodes } = useGLTF(url) as any;
-
-  // for development
-  // const { nodes } = useGLTF(`/${props.modelPath}`) as any;
 
   return (
     <group {...props} dispose={null}>
