@@ -56,14 +56,14 @@ const Carousel = React.forwardRef<
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
       },
-      plugins
+      plugins,
     );
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);
@@ -95,7 +95,7 @@ const Carousel = React.forwardRef<
           scrollNext();
         }
       },
-      [scrollPrev, scrollNext]
+      [scrollPrev, scrollNext],
     );
 
     React.useEffect(() => {
@@ -146,7 +146,7 @@ const Carousel = React.forwardRef<
         </div>
       </CarouselContext.Provider>
     );
-  }
+  },
 );
 Carousel.displayName = "Carousel";
 
@@ -163,7 +163,7 @@ const CarouselContent = React.forwardRef<
         className={cn(
           "flex",
           orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
-          className
+          className,
         )}
         {...props}
       />
@@ -186,7 +186,7 @@ const CarouselItem = React.forwardRef<
       className={cn(
         "min-w-0 shrink-0 grow-0 basis-full",
         orientation === "horizontal" ? "pl-4" : "pt-4",
-        className
+        className,
       )}
       {...props}
     />
@@ -207,13 +207,13 @@ const CarouselPrevious = React.forwardRef<
       size={size}
       className={cn(
         "h-6 w-6 rounded-full bg-[#9BCDCC] hover:bg-[#9BCDCC]/70",
-        className
+        className,
       )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
-      <Play className="h-3 w-3 rotate-180 fill-white mr-0.5" />
+      <Play className="mr-0.5 h-3 w-3 rotate-180 fill-white" />
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -232,14 +232,14 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "h-6 w-6 rounded-full bg-[#9BCDCC] hover:bg-[#9BCDCC]/70 flex items-center justify-center",
-        className
+        "flex h-6 w-6 items-center justify-center rounded-full bg-[#9BCDCC] hover:bg-[#9BCDCC]/70",
+        className,
       )}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
     >
-      <Play className="h-3 w-3 fill-white ml-0.5" />
+      <Play className="ml-0.5 h-3 w-3 fill-white" />
       <span className="sr-only">Next slide</span>
     </Button>
   );

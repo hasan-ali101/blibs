@@ -1,18 +1,17 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { PresentationControls } from "@react-three/drei";
 
 import { Model } from "./model";
 import { Robot } from "../app";
 
 type SceneType = {
-  isMinimised?: boolean;
   selectedRobot: Robot;
 };
 
-const Scene = ({ isMinimised, selectedRobot }: SceneType) => {
+const Scene = ({ selectedRobot }: SceneType) => {
   return (
-    <div className="w-64 h-64">
-      <Canvas className="w-full h-full">
+    <div className="h-64 w-64">
+      <Canvas className="h-full w-full">
         <ambientLight intensity={Math.PI / 2} />
         <spotLight
           position={[10, 10, 10]}
@@ -23,8 +22,16 @@ const Scene = ({ isMinimised, selectedRobot }: SceneType) => {
         />
         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
         <mesh position={[0, -0.2, 0]} scale={2.8}>
-          {!isMinimised && <OrbitControls enableZoom={false} />}
-          <Model rotation-y={-0.3} modelPath={selectedRobot.modelPath || ""} />
+          {/* {!isMinimised && <OrbitControls enableZoom={false} />} */}
+          <PresentationControls
+            global
+            snap={true}
+            rotation={[0, -0.3, 0]}
+            polar={[-Math.PI / 4, Math.PI / 4]}
+            // azimuth={[-Math.PI, Math.PI]}
+          >
+            <Model modelPath={selectedRobot.modelPath || ""} />
+          </PresentationControls>
         </mesh>
       </Canvas>
     </div>

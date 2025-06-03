@@ -4,6 +4,7 @@ import { useState } from "react";
 import Scene from "./components/scene";
 import Collection from "./components/collection";
 import SceneWrapper from "./components/scene-wrapper";
+import "./index.css";
 
 export type Robot = {
   id: number;
@@ -19,9 +20,9 @@ function App() {
   const [selectedRobot, setSelectedRobot] = useState<Robot>();
 
   return (
-    <div className="w-full h-screen">
+    <div className="h-screen w-full">
       <Rnd
-        className={cn(isMinimised && "!w-40 !h-40")}
+        className={cn(isMinimised && "!h-40 !w-40")}
         style={{
           display: "flex",
           alignItems: "center",
@@ -48,8 +49,9 @@ function App() {
           <SceneWrapper
             isMinimised={isMinimised}
             setIsMinimised={setIsMinimised}
+            setSelectedRobot={setSelectedRobot}
           >
-            <Scene isMinimised={isMinimised} selectedRobot={selectedRobot} />
+            <Scene selectedRobot={selectedRobot} />
           </SceneWrapper>
         )}
       </Rnd>

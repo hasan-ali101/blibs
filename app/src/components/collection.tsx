@@ -1,4 +1,4 @@
-import { Cross, Lock, Minus, Store, X } from "lucide-react";
+import { Minus, Store, X } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 
 import {
@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "./ui/accordion";
 import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import {
   Carousel,
   CarouselContent,
@@ -121,42 +122,42 @@ const CollectionCarousel = ({
       opts={{
         align: "center",
       }}
-      className="w-full flex items-center justify-center px-4"
+      className="flex w-full items-center justify-center px-4"
     >
-      <CarouselPrevious className="min-w-6 min-h-6" />
+      <CarouselPrevious className="min-h-6 min-w-6" />
       <CarouselContent>
         {items.map((item) => (
           <CarouselItem
             key={item.id}
-            className="flex justify-center items-center flex-col"
+            className="flex flex-col items-center justify-center"
             onClick={() => {
               item.owned && setOptionedItem(item);
             }}
           >
-            <div
-              className={cn(
-                optionedItem?.id === item.id && "border-2 border-[#00ffe584]",
-                "w-36 h-36 m-2 rounded-4xl relative"
-              )}
-            >
+            <div className="relative m-2 h-36 w-36 rounded-4xl">
               {!item.owned && (
-                <div className="absolute w-full h-full bg-slate-200/50 flex items-center justify-center">
-                  <Lock className="h-full w-full text-slate-600/50"></Lock>
+                <div className="absolute flex h-full w-full items-center justify-center rounded-xl bg-[#758A8C]/40">
+                  {/* <Lock className="h-full w-full text-[#758A8C]/20"></Lock> */}
                 </div>
               )}
               {item.imageUrl && (
                 <img
                   src={item.imageUrl}
                   alt={item.name}
-                  className="w-full h-full object-cover "
+                  className={cn(
+                    optionedItem?.id === item.id &&
+                      "border-3 border-[#00ffe584]",
+                    item.owned && "cursor-pointer",
+                    "h-full w-full rounded-xl object-cover",
+                  )}
                 />
               )}
             </div>
-            <p className="text-[#758A8C] text-xs font-medium">{item.name}</p>
+            <p className="text-xs font-medium text-[#758A8C]">{item.name}</p>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselNext className="min-w-6 min-h-6 " />
+      <CarouselNext className="min-h-6 min-w-6" />
     </Carousel>
   );
 };
@@ -177,29 +178,59 @@ const Collection = ({
   const [optionedItem, setOptionedItem] = useState<Robot | null>(null);
 
   return (
-    <div className="drag-handle px-4 items-center cursor-pointer flex flex-col gap-2 py-2 border border-solid border-[#7BA7AA] rounded-xl m-4 bg-[#ecf6f6]">
+    <div
+      className={cn(
+        isMinimised && "scale-25",
+        "drag-handle m-4 flex cursor-move flex-col items-center gap-2 rounded-xl border border-solid border-[#7BA7AA] bg-[#ecf6f6] px-4 py-2",
+      )}
+      onDoubleClick={() => {
+        if (isMinimised) {
+          setIsMinimised(false);
+        }
+      }}
+    >
       <div className="flex w-full justify-between">
-        <p className="underline w-full text-left font-semibold text-[#758A8C]">
+        <p className="w-full text-left font-semibold text-[#758A8C] underline">
           My Collection
         </p>
         <div className="flex items-center gap-2">
-          <Store className="border border-[#758A8C] mr-4 w-5 h-5 text-[#758A8C] hover:bg-[#758A8C]/10 rounded-full p-0.5" />
-          <Minus
-            onClick={() => {
-              setIsMinimised(!isMinimised);
-            }}
-            className="border border-[#758A8C] w-4 h-4 text-[#758A8C] hover:bg-[#758A8C]/10 rounded-full p-0.5"
-          >
-            -
-          </Minus>
-          <X className="border border-[#758A8C] w-4 h-4 text-[#758A8C] hover:bg-[#758A8C]/10 rounded-full p-0.5" />
+          <Tooltip>
+            <TooltipTrigger>
+              {" "}
+              <Store className="mr-4 h-5 w-5 rounded-full border border-[#758A8C] p-0.5 text-[#758A8C] hover:bg-[#758A8C]/10" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Visit store</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <X className="h-4 w-4 cursor-pointer rounded-full border border-[#758A8C] p-0.5 text-[#758A8C] hover:bg-[#758A8C]/10" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Hide</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <Minus
+                onClick={() => {
+                  setIsMinimised(!isMinimised);
+                }}
+                className="h-4 w-4 cursor-pointer rounded-full border border-[#758A8C] p-0.5 text-[#758A8C] hover:bg-[#758A8C]/10"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Minimise</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex cursor-auto flex-col">
         <Accordion
           type="single"
           collapsible
-          className="w-72 bg-white rounded-t-xl max-h-72 overflow-auto no-scrollbar border-t border-x border-slate-200"
+          className="no-scrollbar max-h-72 w-72 overflow-auto rounded-t-xl border-x border-t border-slate-200 bg-white"
           defaultValue="item-1"
         >
           {Object.keys(collection).map((rarity, index) => {
@@ -219,13 +250,13 @@ const Collection = ({
             );
           })}
         </Accordion>
-        <div className="w-full h-3 bg-white rounded-b-xl border-x border-b border-slate-200"></div>
+        <div className="h-5 w-full rounded-b-xl border-x border-b border-slate-200 bg-white"></div>
       </div>
       <Button
         disabled={
           !optionedItem || !optionedItem.modelPath || !optionedItem.owned
         }
-        className="w-fit border-[#758A8C] border bg-white text-[#758A8C] hover:bg-white/80"
+        className="w-fit border border-[#758A8C] bg-white text-[#758A8C] hover:bg-white/80"
         size="sm"
         onClick={() => {
           optionedItem && setSelectedRobot(optionedItem);

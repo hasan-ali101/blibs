@@ -1,8 +1,18 @@
+import { Dispatch, SetStateAction } from "react";
+import { Bot, Minus, Store, X } from "lucide-react";
+
 import { cn } from "../lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "../components/ui/tooltip";
+import { Robot } from "../app";
 
 type SceneWrapper = {
   isMinimised: boolean;
-  setIsMinimised: (value: boolean) => void;
+  setIsMinimised: Dispatch<SetStateAction<boolean>>;
+  setSelectedRobot: Dispatch<SetStateAction<Robot | undefined>>;
   children?: React.ReactNode;
 };
 
@@ -10,12 +20,13 @@ const SceneWrapper = ({
   isMinimised,
   setIsMinimised,
   children,
+  setSelectedRobot,
 }: SceneWrapper) => {
   return (
     <div
       className={cn(
-        isMinimised && "scale-20 overflow-clip drag-handle cursor-pointer",
-        "flex flex-col group rounded-xl !bg-blue-500/0 transition-all"
+        isMinimised && "drag-handle scale-20 cursor-pointer overflow-clip",
+        "group flex flex-col rounded-xl border-solid !bg-blue-500/0 transition-all",
       )}
       onDoubleClick={() => {
         if (isMinimised) {
@@ -24,25 +35,61 @@ const SceneWrapper = ({
       }}
     >
       <div
-        className={`flex px-4 items-center py-2 justify-end drag-handle w-full h-8 bg-[#ecf6f6] rounded-t-xl cursor-pointer opacity-0 group-hover:opacity-100 group-active:opacity-100`}
+        className={`drag-handle flex h-8 w-full cursor-pointer items-center justify-between rounded-t-xl border-x border-t border-solid border-[#7BA7AA] bg-[#ecf6f6] px-4 py-2 opacity-0 group-hover:opacity-100 group-active:opacity-100`}
       >
-        {!isMinimised && (
-          <p
-            onClick={() => {
-              setIsMinimised(!isMinimised);
-            }}
-            className="text-5xl text-slate-400"
-          >
-            -
-          </p>
-        )}
+        <div className="flex gap-2">
+          <Tooltip>
+            <TooltipTrigger>
+              <X className="h-4 w-4 cursor-pointer rounded-full border border-[#758A8C] p-0.5 text-[#758A8C] hover:bg-[#758A8C]/10" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Hide</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <Minus
+                onClick={() => {
+                  setIsMinimised(!isMinimised);
+                }}
+                className="h-4 w-4 cursor-pointer rounded-full border border-[#758A8C] p-0.5 text-[#758A8C] hover:bg-[#758A8C]/10"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Minimise</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+        <div className="flex gap-2">
+          <Tooltip>
+            <TooltipTrigger>
+              <Bot
+                onClick={() => {
+                  setSelectedRobot(undefined);
+                }}
+                className="h-5 w-5 cursor-pointer rounded-full border border-[#758A8C] p-0.5 text-[#758A8C] hover:bg-[#758A8C]/10"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Bot select</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <Store className="h-5 w-5 cursor-pointer rounded-full border border-[#758A8C] p-0.5 text-[#758A8C] hover:bg-[#758A8C]/10" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Visit store</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </div>
       <div className="flex">
-        <div className="drag-handle w-8 flex-1 bg-[#ecf6f6] cursor-pointer opacity-0 group-hover:opacity-100 group-active:opacity-100" />
+        <div className="drag-handle w-8 flex-1 cursor-pointer border-l border-solid border-[#7BA7AA] bg-[#ecf6f6] opacity-0 group-hover:opacity-100 group-active:opacity-100" />
         {children}
-        <div className="drag-handle flex justify-end w-8 flex-1 bg-[#ecf6f6] cursor-pointer opacity-0 group-hover:opacity-100 group-active:opacity-100" />{" "}
+        <div className="drag-handle flex w-8 flex-1 cursor-pointer justify-end border-r border-solid border-[#7BA7AA] bg-[#ecf6f6] opacity-0 group-hover:opacity-100 group-active:opacity-100" />{" "}
       </div>
-      <div className="drag-handle w-full h-8 bg-[#ecf6f6] rounded-b-xl cursor-pointer opacity-0 group-hover:opacity-100 group-active:opacity-100" />
+      <div className="drag-handle h-8 w-full cursor-pointer rounded-b-xl border-x border-b border-solid border-[#7BA7AA] bg-[#ecf6f6] opacity-0 group-hover:opacity-100 group-active:opacity-100" />
     </div>
   );
 };
